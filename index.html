@@ -1,0 +1,186 @@
+<html>
+  <head>
+    <script>
+    var gauges = new Array();
+
+      var keys = {
+        "cfcd208495d565ef66e7dff9f98764da" : 0,
+        "c4ca4238a0b923820dcc509a6f75849b" : 1,
+        "c81e728d9d4c2f636f067f89cc14862c" : 2,
+        "eccbc87e4b5ce2fe28308fd9f2a7baf3" : 3,
+        "a87ff679a2f3e71d9181a67b7542122c" : 4,
+        "e4da3b7fbbce2345d7772b0674a318d5" : 5,
+        "1679091c5a880faf6fb5e6087eb1b2dc" : 6,
+        "8f14e45fceea167a5a36dedd4bea2543" : 7,
+        "c9f0f895fb98ab9159f51fd0297e236d" : 8,
+        "45c48cce2e2d7fbdea1afc51c7c6ad26" : 9,
+        "d3d9446802a44259755d38e6d163e820" : 10,
+        "6512bd43d9caa6e02c990b0a82652dca" : 11,
+        "c20ad4d76fe97759aa27a0c99bff6710" : 12,
+        "c51ce410c124a10e0db5e4b97fc2af39" : 13,
+        "aab3238922bcc25a6f606eb525ffdc56" : 14,
+        "9bf31c7ff062936a96d3c8bd1f8f2ff3" : 15
+      }
+
+      function init() {
+        function debug(string) {
+          var debug = document.getElementById("debug");
+          var p = document.createElement('p');
+          var now = new Date();
+          p.innerHTML =  now.toLocaleTimeString()+ ": " +string;
+          debug.insertBefore(p, debug.firstChild);
+        }
+
+        var Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
+        var ws = new Socket("ws://localhost:8001/chat");
+        ws.onmessage = function(evt) { 
+          try{
+            data = JSON.parse(evt.data);
+          }
+          catch(err) {
+              debug(error.message);
+          }
+          gauges[keys[data.key]].refresh(data.temperature);
+          debug("Received: " + evt.data); 
+        };
+        ws.onclose = function(event) {
+          debug("Closed - code: " + event.code + ", reason: " + event.reason + ", wasClean: " + event.wasClean);
+        };
+        ws.onopen = function() {
+          debug("connected...");
+          ws.send("hello server");
+          ws.send("hello again");
+        };
+      };
+    </script>
+    <style type="text/css">
+      #debug p{
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+      #debug{
+        max-height: 200px;
+        overflow: auto;
+      }
+      .panel.temperature{
+        height: 190px;
+      }
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.4.7/css/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.4.7/css/normalize.min.css">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.4.7/js/foundation.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/justgage/1.0.1/justgage.min.js"></script>
+  </head>
+  <body onload="init();">
+    <div class="row">
+      <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="#">Temperature Dashboard</a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+      </nav>
+      <div class="row">
+    <div class="large-12 columns">
+        <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge0" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge1" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge2" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge3" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge4" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge5" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge6" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge7" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge8" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge9" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge10" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge11" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge12" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge13" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge14" style="width: 100%;"></div>
+          </div>
+        </div>
+                <div class="large-3 small-6 columns">
+          <div class="panel temperature">
+          <div id="gauge15" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div id="debug" class="panel callout radius"></div>
+    </div>
+    <script>
+      
+      for (var i = 0; i < 16; i++) {
+        gauges[i] = new JustGage({
+          id: "gauge"+i,
+          value: 0,
+          min: 0,
+          max: 40,
+          relativeGaugeSize: true,
+          title: "Temperature " + (i +1)
+        });
+      };
+    </script>
+  </body>
+</html>
