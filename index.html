@@ -32,7 +32,7 @@
         }
 
         var Socket = "MozWebSocket" in window ? MozWebSocket : WebSocket;
-        var ws = new Socket("ws://localhost:8001/chat");
+        var ws = new Socket("ws://141.105.126.62:45679/");
         ws.onmessage = function(evt) { 
           try{
             data = JSON.parse(evt.data);

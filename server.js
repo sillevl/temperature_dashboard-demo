@@ -10,7 +10,7 @@ var wserver = ws.createServer(function (conn) {
     conn.on("close", function (code, reason) {
         console.log("Connection closed")
     })
-}).listen(8001);
+}).listen(45679);
 
 wserver.send = function(msg) {
     wserver.connections.forEach(function (conn) {
@@ -29,5 +29,9 @@ var server = net.createServer(function (socket) {
         wserver.send(data);
     });
 }).listen(45678);
+
+setInterval(function(){
+	wserver.send('{"key":"9bf31c7ff062936a96d3c8bd1f8f2ff3", "temperature":' + Math.round(Math.random()*100, 1) + ', "name":"Demo"}');
+}, 1000);
 
 
