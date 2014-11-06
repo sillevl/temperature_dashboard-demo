@@ -10,6 +10,10 @@ var wserver = ws.createServer(function (conn) {
     conn.on("close", function (code, reason) {
         console.log("Connection closed")
     })
+    socket.on("error", function(err){
+    	console.log("Caught flash policy server socket error: ")
+    	console.log(err.stack)
+  	});
 }).listen(45679);
 
 wserver.send = function(msg) {
@@ -21,11 +25,14 @@ wserver.send = function(msg) {
 var server = net.createServer(function (socket) {
     console.log("connected");
 
+    socket.on("error", function(err){
+    	console.log("Caught flash policy server socket error: ")
+    	console.log(err.stack)
+  	});
+
     socket.on('data', function (data) {
     	var json = JSON.parse(data);
-        console.log(json.toString());
         socket.write('{"status":200, "message":"OK"}');
-
         wserver.send(data);
     });
 }).listen(45678);
