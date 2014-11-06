@@ -30,8 +30,3 @@ var server = net.createServer(function (socket) {
     });
 }).listen(45678);
 
-setInterval(function(){
-	wserver.send('{"key":"9bf31c7ff062936a96d3c8bd1f8f2ff3", "temperature":' + Math.round(Math.random()*100, 1) + ', "name":"Demo"}');
-}, 1000);
-
-
