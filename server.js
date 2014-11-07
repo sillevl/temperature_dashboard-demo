@@ -10,7 +10,7 @@ var wserver = ws.createServer(function (conn) {
     conn.on("close", function (code, reason) {
         console.log("Connection closed")
     })
-    socket.on("error", function(err){
+    	conn.on("error", function(err){
     	console.log("Caught flash policy server socket error: ")
     	console.log(err.stack)
   	});
@@ -36,7 +36,7 @@ var server = net.createServer(function (socket) {
         	socket.write('{"status":200, "message":"OK"}');
         	wserver.send(data);
         } catch(err) {
-             debug(error.message);
+             debug(err.message);
              socket.write('{"status":500, "message":"Oeps, something was wrong"}');
         }
     });
