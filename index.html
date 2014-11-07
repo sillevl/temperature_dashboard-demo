@@ -36,12 +36,12 @@
         ws.onmessage = function(evt) { 
           try{
             data = JSON.parse(evt.data);
+            gauges[keys[data.key]].refresh(data.temperature);
+            debug("Received: " + evt.data); 
           }
           catch(err) {
               debug(error.message);
           }
-          gauges[keys[data.key]].refresh(data.temperature);
-          debug("Received: " + evt.data); 
         };
         ws.onclose = function(event) {
           debug("Closed - code: " + event.code + ", reason: " + event.reason + ", wasClean: " + event.wasClean);

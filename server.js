@@ -31,9 +31,14 @@ var server = net.createServer(function (socket) {
   	});
 
     socket.on('data', function (data) {
-    	var json = JSON.parse(data);
-        socket.write('{"status":200, "message":"OK"}');
-        wserver.send(data);
+    	try{
+    		var json = JSON.parse(data);
+        	socket.write('{"status":200, "message":"OK"}');
+        	wserver.send(data);
+        } catch(err) {
+             debug(error.message);
+             socket.write('{"status":500, "message":"Oeps, something was wrong"}');
+        }
     });
 }).listen(45678);
 
